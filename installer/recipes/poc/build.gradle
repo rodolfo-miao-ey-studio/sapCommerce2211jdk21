@@ -1,0 +1,316 @@
+apply plugin: 'installer-platform-plugin'
+apply plugin: 'installer-addon2-plugin'
+
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+    }
+}
+
+ext {
+    workDir = "./work"
+}
+
+def platform = platform {
+    localProperties {
+        '# place your custom properties into this file instead of modifying the project.properties'
+        '# all properties in this file have higher priority and will overwrite the platform/project.properties settings.'
+
+        property '#hac.webroot', '/hac'
+        property 'googleApiKey', ''
+
+        property 'website.electronics.http', 'http://electronics.local:9001/yacceleratorstorefront'
+        property 'website.electronics.https', 'https://electronics.local:9002/yacceleratorstorefront'
+        property 'website.electronics-standalone.http', 'http://electronics-standalone.local:9001/yacceleratorstorefront'
+        property 'website.electronics-standalone.https', 'https://electronics-standalone.local:9002/yacceleratorstorefront'
+        property 'multicountrysampledataaddon.import.active', 'false'
+        property 'occ.rewrite.overlapping.paths.enabled', 'true' // for being able to run B2C & B2B alongside each other
+        property 'backoffice.solr.search.index.autoinit', 'false'
+        property 'acceleratorservices.payment.sopmock.enabled', 'true'
+        property 'acceleratorservices.payment.hopmock.enabled', 'true'
+        property 'tests.runner.legacy', 'true' //enable junit4 test runner
+		property 'toggle.savecartcontroller.clonesavedcart.hook.enabled', 'false'
+		property 'toggle.quoteHelperSkipRetrieveCartReference.enabled', 'false'
+		property 'toggle.quotePopulatorSkipHasCart.enabled', 'false'
+		property 'toggle.securePortalAuthenticationInterceptor.block.anonymous.punchout.requisition.enabled', 'false'
+		property 'toggle.findOrderByUserAndQuoteReference.enabled', 'false'
+		property 'toggle.quotePopulatorSkipOrderCode.enabled', 'false'
+		property 'toggle.expiredSavedCartDeletion.enabled', 'false'
+		property 'toggle.cart.b2bUnit.addition.enabled', 'false'
+		property 'toggle.useXForwardedForForIp.enabled', 'false'
+
+        property 'cronjob.timertask.loadonstartup', 'false'
+        property 'mail.smtp.server', 'smtp.google.com.br'
+        property 'mail.smtp.port', '25'
+        property 'mail.smtp.auth', 'false'
+        property 'mail.smtp.starttls.enable', 'false'
+        property 'mail.from', 'noreply@gmail.com.br'
+        property 'build.parallel', 'true'
+        property 'log4j2.logger.auditableActionsHandler.name', 'de.hybris.platform.audit.actions.impl.Slf4jAuditableActionHandler'
+        property 'log4j2.logger.auditableActionsHandler.level', 'OFF'
+        property 'audit.order.enabled', 'false'
+        property 'auditing.enabled', 'true'
+        property 'ansi.colors', 'true'
+
+    }
+
+    afterSetup {
+        ensureAdminPasswordSet()
+    }
+
+    extensions {
+        // api-registry
+            extName 'apiregistrybackoffice'
+            extName 'apiregistryservices'
+        // b2c-accelerator
+            extName 'electronicsstore'
+        // b2c-accelerator-addons
+            extName 'captchaaddon' // deprecated
+            extName 'multicountrysampledataaddon' // deprecated
+        // backoffice-addons
+            extName 'pcmbackofficesamplesaddon' // deprecated
+        // backoffice-applications
+            extName 'classificationgroupsservices'
+            extName 'mediaconversionbackoffice'
+            extName 'patchesbackoffice'
+            extName 'pcmbackoffice'
+        // backoffice-framework
+            extName 'backoffice'
+            extName 'platformbackoffice'
+            extName 'ybackoffice'
+        // base-accelerator
+            extName 'yacceleratorbackoffice'
+            extName 'yacceleratorcore'
+            extName 'yacceleratorfacades'
+            // extName 'yacceleratorfulfilmentprocess'
+            extName 'yacceleratorinitialdata'
+            extName 'yacceleratorstorefront' // deprecated
+            // extName 'yacceleratortest'
+            extName 'yaddon' // deprecated
+        // base-commerce
+            extName 'basecommerce'
+            extName 'basecommercebackoffice'
+            extName 'customerreview'
+            extName 'payment'
+            extName 'promotions'
+            extName 'promotionsbackoffice'
+            extName 'voucher'
+            extName 'voucherbackoffice'
+        // commerce-services
+            extName 'commercefacades'
+            extName 'commerceservices'
+            extName 'commerceservicesbackoffice'
+            extName 'commercewebservices'
+            extName 'commercewebservicescommons'
+            extName 'commercewebservicestests'
+            extName 'yocc'
+            extName 'yocctests'
+        // core-accelerator
+            extName 'acceleratorbackoffice'
+            extName 'acceleratorcms'
+            extName 'acceleratorfacades'
+            extName 'acceleratorocc'
+            extName 'acceleratorservices'
+            extName 'acceleratorstorefrontcommons' // deprecated
+            extName 'addonsupport' // deprecated
+        // customer-service
+            extName 'customersupportbackoffice'
+            extName 'customerticketingaddon' // deprecated
+            extName 'customerticketingfacades'
+            extName 'customerticketingocc'
+            extName 'customerticketingocctests'
+            extName 'ticketsystem'
+            extName 'ticketsystembackoffice'
+        // entitlements
+            extName 'entitlementbackoffice'
+            extName 'entitlementfacades'
+            extName 'entitlementservices'
+        // event-tracking
+            extName 'eventtrackingmodel' // deprecated
+            extName 'eventtrackingpublisher' // deprecated
+            extName 'eventtrackingservices' // deprecated
+            extName 'eventtrackingwsaddon' // deprecated
+        // message-center
+            extName 'messagecentercsfacades'
+            extName 'messagecentercsocc'
+            // extName 'messagecentercsoccaddon' // deprecated
+            extName 'messagecentercsservices'
+        // notification
+            extName 'notificationaddon' // deprecated
+            extName 'notificationfacades'
+            extName 'notificationocc'
+            // extName 'notificationoccaddon' // deprecated
+            // extName 'notificationocctests'
+            extName 'notificationservices'
+        // npm-ancillary
+            extName 'npmancillary'
+        // order-management
+            extName 'ordermanagementaddon' // deprecated
+            extName 'ordermanagementfacades'
+            extName 'ordermanagementwebservices'
+            extName 'orderselfserviceaddon' // deprecated
+            extName 'warehousing'
+            extName 'warehousingbackoffice'
+            extName 'warehousingfacades'
+            extName 'warehousingwebservices'
+            extName 'yacceleratorordermanagement'
+        // personalization
+            extName 'personalizationcms'
+            extName 'personalizationcmsbackoffice'
+            extName 'personalizationcmsweb'
+            extName 'personalizationfacades'
+            extName 'personalizationintegration'
+            extName 'personalizationintegrationbackoffice'
+            extName 'personalizationsampledataaddon' // deprecated
+            extName 'personalizationservices'
+            extName 'personalizationservicesbackoffice'
+            extName 'personalizationsmartedit'
+            extName 'personalizationwebservices'
+            extName 'previewpersonalizationweb'
+        // personalization-integration
+            extName 'personalizationaddon' // deprecated
+            extName 'personalizationyprofile'
+            extName 'personalizationyprofilesampledataaddon' // deprecated
+        // personalization-promotion
+            extName 'personalizationpromotions'
+            extName 'personalizationpromotionsbackoffice'
+            extName 'personalizationpromotionssampledataaddon' // deprecated
+            extName 'personalizationpromotionssmartedit'
+            extName 'personalizationpromotionsweb'
+        // personalization-search
+            extName 'personalizationsearch'
+            extName 'personalizationsearchbackoffice'
+            extName 'personalizationsearchsamplesaddon' // deprecated
+            extName 'personalizationsearchsmartedit'
+            extName 'personalizationsearchweb'
+        // platform
+            extName 'adminapi'
+            extName 'alluicommons'
+            extName 'auditreportservices'
+            // extName 'azurecloud'
+            extName 'azuredtu'
+            extName 'deltadetection'
+            extName 'embeddedserver'
+            extName 'groovynature'
+            // extName 'ldap' // deprecated
+            extName 'mediaconversion'
+            extName 'patches'
+            // extName 'patchesdemo'
+            // extName 'samlsinglesignon'
+            extName 'springintegrationlibs'
+            extName 'tomcatembeddedserver'
+            // extName 'y2ysync' // deprecated
+            // extName 'ydocumentcart'
+            extName 'yempty'
+            extName 'yhacext'
+            extName 'yvoid'
+        // promotion-engine
+            extName 'promotionenginebackoffice'
+            extName 'promotionengineservices'
+        // rule-engine
+            extName 'droolsruleengineservices'
+            extName 'ordercalculation'
+            extName 'rulebuilderbackoffice'
+            extName 'ruledefinitions'
+            extName 'ruleengine'
+            extName 'ruleenginebackoffice'
+            extName 'ruleengineservices'
+        // search-and-navigation
+            extName 'backofficesolrsearch'
+            extName 'solrfacetsearch'
+            extName 'solrfacetsearchbackoffice'
+            extName 'solrserver'
+        // search-services
+            extName 'backofficesearchservices'
+            extName 'searchbackoffice'
+            extName 'searchprovidercssearchbackoffice'
+            extName 'searchprovidercssearchservices'
+            extName 'searchservices'
+        // web-content-management-system
+            extName 'cms2'
+               extName 'cms2lib'
+            extName 'cmsbackoffice'
+            extName 'cmsfacades'
+            extName 'cmsocc'
+            // extName 'cmsoccaddon' // deprecated
+            extName 'cmswebservices'
+            extName 'previewwebservices'
+        // web-services-commons
+            extName 'permissionsfacades'
+            extName 'permissionswebservices'
+            extName 'swaggerintegration'
+            extName 'webservicescommons'
+            extName 'ywebservices'
+
+        // CUSTOM POC
+            extName 'poccore'
+            extName 'pocfacades'
+            extName 'pocbackoffice'
+            extName 'pococc'
+    }
+
+    addons {
+        forStoreFronts('yacceleratorstorefront') {
+            names(
+                'captchaaddon',
+                'customerticketingaddon',
+                'eventtrackingwsaddon',
+                'multicountrysampledataaddon',
+                'notificationaddon',
+                'ordermanagementaddon',
+                'orderselfserviceaddon',
+                'pcmbackofficesamplesaddon',
+                'personalizationaddon',
+                'personalizationsampledataaddon',
+                'personalizationyprofilesampledataaddon',
+            )
+            template 'yacceleratorstorefront'
+        }
+    }
+}
+
+task setup() {
+    doLast {
+        platform.setup()
+    }
+}
+
+task buildSystem(dependsOn: setup) {
+    doLast {
+        platform.build()
+    }
+}
+
+task initialize(dependsOn: buildSystem) {
+    doLast {
+        platform.initialize()
+    }
+}
+
+task update(dependsOn: buildSystem) {
+    doLast {
+        platform.update()
+    }
+}
+
+task start {
+    doLast {
+        platform.start()
+    }
+}
+
+task startInBackground {
+    doLast {
+        platform.startInBackground()
+    }
+}
+
+task stopInBackground {
+    doLast {
+        platform.stopInBackground()
+    }
+}
