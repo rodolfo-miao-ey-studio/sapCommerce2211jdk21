@@ -1,0 +1,13 @@
+@charset "utf-8";
+@import "./support/pocbackofficewidget-variables.scss";
+
+.yw-labelstyle
+{
+	color: $pocbackoffice-label-text-color;
+}
+
+.pocbackoffice-container {
+	background: $pocbackoffice-container-background;
+	font-family: $pocbackoffice-container-font-family;
+	font-size: $pocbackoffice-container-font-size;
+}

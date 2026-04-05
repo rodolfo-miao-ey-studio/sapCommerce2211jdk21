@@ -1,0 +1,11 @@
+#Ant properties
+#Fri Feb 06 01:35:44 UTC 2026
+builddate=20260206 0134
+description=pocfacades
+group.id=de.hybris.platform
+module.name=platform-module
+name=pocfacades
+releasedate=20260206 0134
+vendor=hybris
+version=2211-jdk21.8
+version.api=2211-jdk21
