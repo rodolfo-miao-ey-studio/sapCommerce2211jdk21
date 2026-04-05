@@ -7,6 +7,20 @@
 -->
 
 <items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="items.xsd">
-
+    <itemtypes>
+    <typegroup name="Product">
+    <itemtype code="Product" autocreate="false" generate="false">
+        <description>Extending Product attributes</description>
+        <attributes>
+            <attribute qualifier="isProductEY" type="boolean">
+                <description>Is Product From EY</description>
+                <defaultvalue>java.lang.Boolean.FALSE</defaultvalue>
+                <persistence type="property"/>
+                <modifiers initial="true" optional="false"/>
+            </attribute>
+        </attributes>
+    </itemtype>
+    </typegroup>
+    </itemtypes>
 
 </items>

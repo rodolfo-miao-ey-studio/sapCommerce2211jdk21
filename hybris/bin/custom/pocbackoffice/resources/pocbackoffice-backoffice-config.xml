@@ -2,6 +2,15 @@
 <!--
  Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved
 -->
-<config xmlns="http://www.hybris.com/cockpit/config">
-
+<config xmlns="http://www.hybris.com/cockpit/config"
+    xmlns:ea="http://www.hybris.com/cockpitng/component/editorArea">
+    <context merge-by="type" parent="GenericItem" type="Product" component="editor-area">
+        <ea:editorArea name="">
+            <ea:tab name="hmc.tab.product.extendedattributes" position="26">
+                <ea:section name="hmc.section.product.remarks">
+                    <ea:attribute qualifier="isProductEY"/>
+                </ea:section>
+            </ea:tab>
+    </ea:editorArea>
+</context>
 </config>
