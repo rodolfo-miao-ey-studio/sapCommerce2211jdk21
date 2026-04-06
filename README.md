@@ -1,4 +1,4 @@
-# SAP COMMERCE B2C POC 🚀
+# SAP COMMERCE B2C POC - TREINAMENTO 🚀
 
 ## Índice 🧭
 
