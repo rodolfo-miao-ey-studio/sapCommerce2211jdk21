@@ -22,5 +22,9 @@
         <property name="flexibleSearchService" ref="flexibleSearchService"/>
     </bean>
 
+    <bean id="pocProductFacade" class="br.com.pocfacades.product.impl.DefaultPocProductFacade">
+        <property name="pocProductService" ref="pocProductService"/>
+    </bean>
+
 
 </beans>

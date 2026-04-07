@@ -11,4 +11,12 @@
            https://www.springframework.org/schema/aop/spring-aop.xsd">
 
 
+	<bean id="pocProductDao" class="br.com.poccore.dao.impl.DefaultPocProductDao">
+		<property name="flexibleSearchService" ref="flexibleSearchService"/>
+	</bean>
+
+	<bean id="pocProductService" class="br.com.poccore.service.impl.DefaultPocProductService">
+		<property name="pocProductDao" ref="pocProductDao"/>
+	</bean>
+
 </beans>
