@@ -20,6 +20,9 @@ public class DefaultPocProductService implements PocProductService {
         PocProductIsEyInfoData pocProductIsEyInfoData = new PocProductIsEyInfoData();
 
         Boolean isProductEy = getPocProductDao().getEyProduct(productCode);
+        if(null == isProductEy){
+            isProductEy = false;
+        }
         pocProductIsEyInfoData.setIsProductEy(isProductEy);
         return  pocProductIsEyInfoData;
     }

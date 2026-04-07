@@ -7,14 +7,18 @@ import br.com.pocfacades.product.data.PocProductIsEyInfoData;
 import de.hybris.platform.webservicescommons.swagger.ApiBaseSiteIdParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 
-
+@Controller
+@Tag(name = "Poc Products")
+@RequestMapping(value = "/{baseSiteId}/products")
 public class PocProductsController extends PocBaseController {
     private static final Logger LOG = LoggerFactory.getLogger(PocProductsController.class);
 
@@ -29,7 +33,7 @@ public class PocProductsController extends PocBaseController {
      * @param productCode The code for the target product.
      * @return HttpStatus 200 for successfully generated report.
      */
-    @Secured({ "ROLE_EMPLOYEEGROUP", "ROLE_TRUSTED_CLIENT" })
+    @Secured({ "ROLE_TRUSTED_CLIENT" })
     @GetMapping("/{productCode}/checkey")
     @ResponseBody
     @Operation(
